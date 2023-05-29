@@ -11,20 +11,23 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+    <tx:annotation-driven />
+
     <bean class="org.springframework.jdbc.datasource.DriverManagerDataSource" name="dataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://localhost:3306/orm"/>
         <property name="username" value="root"/>
         <property name="password" value="root"/>
     </bean>
-    
+
     <bean class="org.springframework.orm.hibernate5.LocalSessionFactoryBean" name="sessionFactory">
         <property name="dataSource" ref="dataSource"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.hbmddl.auto">update</prop>
+                <prop key="hibernate.hbmddl.auto">create</prop>
+<!--                <prop key="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.WeblogicJtaPlatform</prop>-->
             </props>
         </property>
         <property name="annotatedClasses">
@@ -49,6 +52,5 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <tx:annotation-driven transaction-manager="transactionManager" />
 
 </beans>
